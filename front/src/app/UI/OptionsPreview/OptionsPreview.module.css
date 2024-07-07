@@ -1,0 +1,23 @@
+.value {
+    font-family: 'Source Sans Pro';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 18px;
+    letter-spacing: 0.05em;
+    min-width: 10px;
+    min-height: 10px;
+    margin: 0 2px 0 2px;
+    padding: 6px;
+    border: 1px solid black;
+}
+
+.selected {
+    background-color: black;
+    color: white;
+}
+
+.outline {
+    outline: 1px solid var(--brand-green);
+    outline-offset: 1px;
+}

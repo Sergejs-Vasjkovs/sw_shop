@@ -1,0 +1,13 @@
+.flex {
+    display: flex;
+    justify-content: space-between;
+}
+
+.light {
+    font-weight: 500;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+}

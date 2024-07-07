@@ -1,0 +1,138 @@
+.wrapper {
+    max-width: 730px;
+    height: 610px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.small {
+    width: 100px;
+    height: 510px;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+    scrollbar-width: thin;
+  }
+
+.small::-webkit-scrollbar {
+    width: 6px;
+}
+.small::-webkit-scrollbar-thumb{
+    background: lightgray;
+}
+
+.preview {
+    width: 78px;
+    height: 78px;
+    object-fit: scale-down;
+    margin-bottom: 20px;
+    border: 1px solid white;
+}
+
+.preview:hover {
+    border: 1px solid lightgray;
+    cursor: pointer;
+}
+
+.selected {
+    border: 1px solid black;
+}
+
+.big {
+    width: 610px;
+    height: 510px;
+    position: relative;
+}
+
+.btnLeft {
+    width: 30px;
+    height: 30px;
+    background-color: rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+    position: relative;
+    position: absolute;
+    top: 50%;
+    left: 5%;
+    transform: translate(50%, -50%);
+}
+
+.arrowLeft {
+    position: absolute;
+    top: 11px;
+    left: 11px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    display: inline-block;
+    padding: 3px;
+    transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
+  }
+
+  .arrowRight {
+    position: absolute;
+    top: 11px;
+    left: 11px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    display: inline-block;
+    padding: 3px;
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+  }
+
+  .btnRight {
+    width: 30px;
+    height: 30px;
+    background-color: rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+    position: relative;
+    position: absolute;
+    top: 50%;
+    right: 5%;
+    transform: translate(50%, -50%);
+}
+
+
+.big > img {
+    width: 100%;
+    height: 100%;
+    object-fit: scale-down;
+}
+
+.outofstock {
+    font-size: 24px;
+    line-height: 160%;
+    text-transform: uppercase;
+    color: #8D8F9A;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.5); 
+}
+
+@media only screen and (max-width: 760px) {
+.wrapper {
+        flex-direction: column-reverse;
+        height: 100%;
+        margin-bottom: 35px;
+    }
+
+.small {
+    width: 610px;
+    height: 100px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    overflow: auto;
+    scrollbar-width: thin;
+      }
+
+.big {
+    margin-bottom: 30px;
+    }
+}
