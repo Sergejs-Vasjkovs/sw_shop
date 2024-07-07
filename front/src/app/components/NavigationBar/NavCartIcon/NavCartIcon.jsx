@@ -33,8 +33,8 @@ class NavCartLogo extends Component {
             <div onClick={this.toggleModalHandler} data-testid="cart-btn"
                 className={`${styles.cart} ${this.state.isAnimated ? styles.bump : ""}`}>
                 <img src={cartIcon} alt="shop cart" />
-                {totalQuantity > 0 && <div className={styles.number} data-testid="cart-count-bubble">
-                    {totalQuantity}</div>}
+                {totalQuantity > 0 && <div className={styles.number}><span data-testid="cart-count-bubble">
+                    {totalQuantity}</span></div>}
             </div>
         );
     }

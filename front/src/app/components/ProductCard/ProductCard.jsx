@@ -3,13 +3,13 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import styles from "./ProductCard.module.css";
 import basketImg from "../../assets/empty_cart_white.svg";
-import { Link } from "react-router-dom";
 import { addItem } from "../../../store/cartSlice";
 import { compose } from "redux";
 import { graphql } from "@apollo/client/react/hoc";
 import queries from "../../GraphQL/queries";
 import groupAttributes from "../../utils/groupAttributes";
 import toKebabCase from "../../utils/toKebabCase";
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 class ProductCard extends Component {
     addProductToCartHandler = async (id) => {
@@ -39,20 +39,23 @@ class ProductCard extends Component {
         const { gallery, name, inStock, prices, id } = product;
         const testIdName = toKebabCase(name);
         return (
-            <Link className={styles.card} data-testid={`product-${testIdName}`}
-                to={`category/${currentCategory.name}/${id}`}>
-                <div className={styles.image}>
-                    <img src={gallery[0].image_url} alt={name} />
-                    {inStock ? null : <div className={styles.outofstock}>out of stock</div>}
-                </div>
-                <p className={styles.name}>{name}</p>
-                <p className={styles.price}>{prices[0].symbol} {prices[0].amount}</p>
-                {inStock
-                    ? <div className={styles.basket} onClick={() => this.addProductToCartHandler(id)}>
-                        <img className={styles.icon} src={basketImg} alt="shopping icon" />
+            <div className={styles.card} data-testid={`product-${testIdName}`}>
+                <Link to={`category/${currentCategory.name}/${id}`}>
+                    <div className={styles.image}>
+                        <img src={gallery[0].image_url} alt={name} />
+                        {inStock ? null : <div className={styles.outofstock}>out of stock</div>}
                     </div>
-                    : null}
-            </Link>
+                    <p className={styles.name}>{name}</p>
+                    <p className={styles.price}>{prices[0].symbol} {prices[0].amount}</p>
+                </Link>
+                {
+                    inStock
+                        ? <div className={styles.basket} onClick={() => this.addProductToCartHandler(id)}>
+                            <img className={styles.icon} src={basketImg} alt="shopping icon" />
+                        </div>
+                        : null
+                }
+            </div>
         );
     }
 }

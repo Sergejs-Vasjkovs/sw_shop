@@ -44,27 +44,9 @@ export class ProductAttributes extends Component {
         });
     };
 
-    checkNonEmptyValues() {
-        for (const key in this.state) {
-            if (Object.prototype.hasOwnProperty.call(this.state, key)) {
-                if (this.state[key] === "") {
-                    return false;
-                }
-            }
-        }
-        return true;
-    };
-
     render() {
         const { name, brand, attributes, prices, description, inStock } = this.props.product;
         const groupedAttributes = groupAttributes(attributes);
-        let isActive = false;
-
-        if (inStock) {
-            isActive = this.checkNonEmptyValues();
-        } else {
-            isActive = inStock;
-        };
 
         const result = description.split("\\n").map(line => [`${line} <br />`]).join(" ");
 
@@ -87,7 +69,7 @@ export class ProductAttributes extends Component {
                     }
                     <p className={styles.attribute}>Price</p>
                     <p className={styles.price}>{prices[0].symbol} {prices[0].amount} </p>
-                    <Button testid='add-to-cart' type="onSubmit" isActive={isActive} />
+                    <Button data-testid="add-to-cart" type="onSubmit" isActive={inStock} />
                 </form>
                 <div className={styles.description}>{parse(result)}</div>
             </div>
