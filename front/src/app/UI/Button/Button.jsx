@@ -15,7 +15,7 @@ class Button extends Component {
 
 Button.defaultProps = {
     type: "button",
-    name: "Click on me",
+    name: "add to cart",
     isActive: true
 };
 

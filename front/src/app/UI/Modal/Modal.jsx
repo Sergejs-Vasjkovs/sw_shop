@@ -29,7 +29,7 @@ class ModalWindow extends Component {
     updateTopPosition() {
         const { initialTopPosition } = this.props;
         const scrollTop = window.scrollY;
-        const newTopPosition = scrollTop > initialTopPosition ? "0px" : `${initialTopPosition - scrollTop}px`;
+        const newTopPosition = scrollTop < initialTopPosition ? `${initialTopPosition}px` : `${scrollTop}px`;
         if (this.state.topPosition !== newTopPosition) {
             this.setState({ topPosition: newTopPosition });
         }
