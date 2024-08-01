@@ -4,9 +4,6 @@
     font-weight: 700;
     font-size: 16px;
     line-height: 160%;
-
-    display: flex;
-    justify-content: space-between;
 }
 
 .container {
