@@ -83,7 +83,7 @@ class MiniCart extends Component {
                         ? (<Mutation mutation={CREATE_ORDER}>
                             {(createOrders, { loading, error }) => (
                                 <>
-                                    {!loading && !error && <Button name="PLACE ORDER" styleName="Medium" clickOnButton={() => this.placeOrderHandler(createOrders)} />}
+                                    {!loading && !error && <Button name="Checkout" styleName="Medium" clickOnButton={() => this.placeOrderHandler(createOrders)} />}
                                     {loading && <ButtonDisabled name="LOADING" styleName="Medium" />}
                                     {error && <ButtonDisabled name="SOME ERROR" styleName="Medium" />}
                                 </>
@@ -91,7 +91,7 @@ class MiniCart extends Component {
                         </Mutation>
                         )
                         : (
-                            <ButtonDisabled name="PLACE ORDER" styleName="Medium" />
+                            <ButtonDisabled name="cart is empty" styleName="Medium" />
                         )}
                 </div>
             </div>

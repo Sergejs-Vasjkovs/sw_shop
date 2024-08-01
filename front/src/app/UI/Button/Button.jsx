@@ -4,10 +4,10 @@ import PropTypes from "prop-types";
 
 class Button extends Component {
     render() {
-        const { type, clickOnButton, isActive, testid } = this.props;
+        const { type, clickOnButton, isActive, testid, name } = this.props;
         return (
             <>
-                <button data-testid={testid} type={type} className={styles.large} disabled={!isActive} onClick={clickOnButton}>ADD TO CART</button>
+                <button data-testid={testid} type={type} className={styles.large} disabled={!isActive} onClick={clickOnButton}>{name}</button>
             </>
         );
     }
@@ -21,6 +21,7 @@ Button.defaultProps = {
 
 Button.propTypes = {
     testid: PropTypes.string,
+    name: PropTypes.string,
     type: PropTypes.string,
     styleName: PropTypes.string,
     clickOnButton: PropTypes.func,
