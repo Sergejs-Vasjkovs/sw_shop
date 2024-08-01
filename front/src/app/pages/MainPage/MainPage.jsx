@@ -60,8 +60,8 @@ class MainPage extends Component {
                         </Modal>
                         : null}
                     <Switch>
-                        <Route exact path="/:category?" component={ProductList} />
                         <Route path="/category/:category?/:id?" component={ProductDescription} />
+                        <Route exact path="/:category?" component={ProductList} />
                         <Route component={PageNoteFound} />
                     </Switch>
                 </main>

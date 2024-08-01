@@ -15,11 +15,17 @@ export const categoriesSlice = createSlice({
         },
         setCurrentValue: (state, action) => {
             state.currentValue = action.payload;
+        },
+        setCategoryByName: (state, action) => {
+            const foundCategory = state.value.find(category => category.name === action.payload);
+            if (foundCategory) {
+                state.currentValue = foundCategory;
+            }
         }
     }
 });
 
 const { actions, reducer } = categoriesSlice;
-export const { fetchCategoriesSuccess, setCurrentValue } = actions;
+export const { fetchCategoriesSuccess, setCurrentValue, setCategoryByName } = actions;
 
 export default reducer;

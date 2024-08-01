@@ -7,6 +7,7 @@ import Button from "../../UI/Button/Button";
 import { addItem } from "../../../store/cartSlice";
 import groupAttributes from "../../utils/groupAttributes";
 import parse from "html-react-parser";
+import { toggleModalVisibility } from "../../../store/modalSlice";
 
 export class ProductAttributes extends Component {
     constructor() {
@@ -33,6 +34,7 @@ export class ProductAttributes extends Component {
             input: this.state
         };
         this.props.addItem(newProduct);
+        this.props.toggleModalVisibility();
     };
 
     onChangeHandler = (input) => {
@@ -79,7 +81,8 @@ export class ProductAttributes extends Component {
 
 ProductAttributes.propTypes = {
     product: PropTypes.object.isRequired,
-    addItem: PropTypes.func.isRequired
+    addItem: PropTypes.func.isRequired,
+    toggleModalVisibility: PropTypes.func.isRequired
 };
 
-export default connect(null, { addItem })(ProductAttributes);
+export default connect(null, { addItem, toggleModalVisibility })(ProductAttributes);

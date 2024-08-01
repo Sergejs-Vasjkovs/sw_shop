@@ -10,6 +10,7 @@ import queries from "../../GraphQL/queries";
 import groupAttributes from "../../utils/groupAttributes";
 import toKebabCase from "../../utils/toKebabCase";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import { toggleModalVisibility } from "../../../store/modalSlice";
 
 class ProductCard extends Component {
     addProductToCartHandler = async (id) => {
@@ -28,6 +29,7 @@ class ProductCard extends Component {
                 input
             };
             this.props.addItem(newProduct);
+            this.props.toggleModalVisibility();
         } catch (error) {
             console.error(error.message);
         }
@@ -63,6 +65,7 @@ class ProductCard extends Component {
 ProductCard.propTypes = {
     product: PropTypes.object.isRequired,
     addItem: PropTypes.func.isRequired,
+    toggleModalVisibility: PropTypes.func.isRequired,
     productById: PropTypes.object.isRequired,
     categories: PropTypes.array
 };
@@ -71,6 +74,6 @@ const mapStateToProps = state => ({
     categories: state.categories.value
 });
 
-export default connect(mapStateToProps, { addItem })(compose(
+export default connect(mapStateToProps, { addItem, toggleModalVisibility })(compose(
     graphql(queries.productById, { options: ({ id }) => ({ variables: { id } }), name: "productById" })
 )(ProductCard));
