@@ -12,20 +12,14 @@ class ProductsList extends Component {
             return <Loader />;
         }
 
-        const displayedProducts = products.filter(product => {
-            if (currentCategory.id === "1") {
-                return product;
-            } else {
-                return product.category_id.toString() === currentCategory.id;
-            }
-        });
+        const filteredProducts = products.filter(product => product.category_id === currentCategory.id);
 
         return (
             <>
                 <h2 className={styles.category}>{currentCategory.name}</h2>
                 <div className={styles.wrapper}>
                     <div className={styles.container}>
-                        {displayedProducts.map((product) => (
+                        {(filteredProducts.length ? filteredProducts : products).map((product) => (
                             <ProductCard key={product.id} product={product} />
                         ))}
                     </div>

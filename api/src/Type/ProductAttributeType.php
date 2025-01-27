@@ -1,11 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Type;
 
-use GraphQL\Type\Definition\ObjectType;
 use App\Types;
 
-class ProductAttributeType extends ObjectType
+class ProductAttributeType extends BaseType
 {
     public function __construct()
     {

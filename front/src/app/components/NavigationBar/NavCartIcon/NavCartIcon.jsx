@@ -3,7 +3,8 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import cartIcon from "../../../assets/empty_cart.svg";
 import styles from "./NavCartIcon.module.css";
-import { toggleModalVisibility } from "../../../../store/modalSlice";
+import { toggleModalVisibility } from "../../../../store/slices/modalSlice";
+import { selectTotalQuantity } from "../../../../store/selectors/cartSelectors";
 
 class NavCartLogo extends Component {
     constructor() {
@@ -46,7 +47,7 @@ NavCartLogo.propTypes = {
 };
 
 const mapStateToProps = state => ({
-    totalQuantity: state.cart.totalQuantity
+    totalQuantity: selectTotalQuantity(state)
 });
 
 export default connect(mapStateToProps, { toggleModalVisibility })(NavCartLogo);

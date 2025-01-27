@@ -1,15 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Type;
 
 use App\Types;
-use GraphQL\Type\Definition\ObjectType;
-use App\Model\Order;
+use App\Resolver\OrderResolver;
 
-class MutationType extends ObjectType
+class MutationType extends BaseType
 {
-    public function __construct()
+    private OrderResolver $orderResolver;
+
+    public function __construct(OrderResolver $orderResolver)
     {
+        $this->orderResolver = $orderResolver;
+
         $config = [
             'name' => 'Mutation',
             'fields' => function () {
@@ -19,23 +24,8 @@ class MutationType extends ObjectType
                         'args' => [
                             'options' => Types::listOf(Types::options())
                         ],
-                        'resolve' => function ($rootValue, $args, $context) {
-                            $orders = $args['options'];
-                            $pdo = $context["db"];
-                            $results = [];
-                            foreach ($orders as $options) {
-                                $result = (new Order($pdo, $options['product_id'], $options['options'], $options['quantity']))->insertOrder($orders);
-                                if ($result) {
-                                    $results[] = [
-                                        'id' => $result,
-                                        'product_id' => $options['product_id'],
-                                        'options' => $options['options'],
-                                        'quantity' => $options['quantity'],
-                                    ];
-                                }
-                            }
-                            return $results;
-                        }
+                        'resolve' => fn($root, $args, $context) =>
+                        $this->orderResolver->createOrders($root, $args, $context)
                     ],
                 ];
             }

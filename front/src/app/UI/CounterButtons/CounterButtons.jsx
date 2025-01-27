@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import MainStyles from "./CounterButtons.module.css";
 import MiniStyles from "./MiniCounterButtons.module.css";
-import { addQuantity, subtractQuantity } from "../../../store/cartSlice";
+import { addQuantity, subtractQuantity } from "../../../store/slices/cartSlice";
 
 class CounterButtons extends Component {
     plussItemHandler = (time) => {

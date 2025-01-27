@@ -1,11 +1,13 @@
 import PropTypes from "prop-types";
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import styles from "./MiniCartOrderList.module.css";
 import CartProduct from "../CartProduct/CartProduct";
+import { selectTotalAmount } from "../../../store/selectors/cartSelectors";
 
 class MiniCartOrderList extends Component {
     render() {
-        const { totalPrice, cartProductList, totalQuantity } = this.props;
+        const { totalPrice, cartProductList, totalQuantity, totalAmount } = this.props;
 
         return (
             <>
@@ -18,7 +20,7 @@ class MiniCartOrderList extends Component {
                 </div>
 
                 <p className={`${styles.items} ${styles.flex}`}>Total:
-                    <span className={styles.light}>{totalPrice.symbol} {totalPrice.totalAmount.toFixed(2)}</span>
+                    <span className={styles.light}>{totalPrice.symbol} {totalAmount}</span>
                 </p>
             </>
         );
@@ -28,7 +30,12 @@ class MiniCartOrderList extends Component {
 MiniCartOrderList.propTypes = {
     totalPrice: PropTypes.object.isRequired,
     totalQuantity: PropTypes.number.isRequired,
-    cartProductList: PropTypes.array.isRequired
+    cartProductList: PropTypes.array.isRequired,
+    totalAmount: PropTypes.string.isRequired
 };
 
-export default MiniCartOrderList;
+const mapStateToProps = state => ({
+    totalAmount: selectTotalAmount(state)
+});
+
+export default connect(mapStateToProps)(MiniCartOrderList);

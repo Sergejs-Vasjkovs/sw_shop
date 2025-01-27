@@ -1,17 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Type;
 
 use App\Types;
-use GraphQL\Type\Definition\ObjectType;
-use App\Model\ProductAttributes;
-use App\Model\ProductGallery;
-use App\Model\ProductPrice;
+use App\Resolver\ProductResolver;
 
-class ProductType extends ObjectType
+class ProductType extends BaseType
 {
-    public function __construct()
+    private ProductResolver $resolver;
+
+    public function __construct(ProductResolver $resolver)
     {
+        $this->resolver = $resolver;
+
         $config = [
             'name' => 'Product',
             'fields' => function () {
@@ -24,27 +27,18 @@ class ProductType extends ObjectType
                     'brand' => Types::string(),
                     'attributes' => [
                         'type' => Types::listOf(Types::productAttribute()),
-                        'resolve' => function ($root, $args, $context) {
-                            $pdo = $context["db"];
-                            $id = $root['id'];
-                            return (new ProductAttributes($pdo, $id))->getAll();
-                        }
+                        'resolve' => fn($root, $args, $context) =>
+                        $this->resolver->resolveAttributes($root, $args, $context)
                     ],
                     'gallery' => [
                         'type' => Types::listOf(Types::productGallery()),
-                        'resolve' => function ($root, $args, $context) {
-                            $pdo = $context["db"];
-                            $id = $root['id'];
-                            return (new ProductGallery($pdo, $id))->getAll();
-                        }
+                        'resolve' => fn($root, $args, $context) =>
+                        $this->resolver->resolveGallery($root, $args, $context)
                     ],
                     'prices' => [
                         'type' => Types::listOf(Types::productPrice()),
-                        'resolve' => function ($root, $args, $context) {
-                            $pdo = $context["db"];
-                            $id = $root['id'];
-                            return (new ProductPrice($pdo, $id))->getAll();
-                        }
+                        'resolve' => fn($root, $args, $context) =>
+                        $this->resolver->resolvePrices($root, $args, $context)
                     ],
                 ];
             },

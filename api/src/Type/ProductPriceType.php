@@ -1,11 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Type;
 
-use GraphQL\Type\Definition\ObjectType;
 use App\Types;
 
-class ProductPriceType extends ObjectType
+class ProductPriceType extends BaseType
 {
     public function __construct()
     {

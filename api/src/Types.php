@@ -11,6 +11,9 @@ use App\Type\MutationType;
 use App\Type\OptionsType;
 use App\Type\OrderType;
 use App\Type\QueryType;
+use App\Resolver\CategoryResolver;
+use App\Resolver\ProductResolver;
+use App\Resolver\OrderResolver;
 use GraphQL\Type\Definition\Type;
 
 class Types
@@ -25,9 +28,20 @@ class Types
     private static $order;
     private static $options;
 
+    private static function getResolvers()
+    {
+        $db = \App\Config\DbConnect::getConnection();
+        return [
+            'category' => new CategoryResolver($db),
+            'product' => new ProductResolver($db),
+            'order' => new OrderResolver($db)
+        ];
+    }
+
     public static function mutation()
     {
-        return self::$mutation ?: (self::$mutation = new MutationType());
+        $resolvers = self::getResolvers();
+        return self::$mutation ?: (self::$mutation = new MutationType($resolvers['order']));
     }
 
     public static function order()
@@ -47,7 +61,8 @@ class Types
 
     public static function product()
     {
-        return self::$product ?: (self::$product = new ProductType());
+        $resolvers = self::getResolvers();
+        return self::$product ?: (self::$product = new ProductType($resolvers['product']));
     }
 
     public static function productAttribute()
@@ -67,7 +82,8 @@ class Types
 
     public static function query()
     {
-        return self::$query ?: (self::$query = new QueryType());
+        $resolvers = self::getResolvers();
+        return self::$query ?: (self::$query = new QueryType($resolvers['category'], $resolvers['product']));
     }
 
     public static function int()

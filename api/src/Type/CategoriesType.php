@@ -1,22 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Type;
 
 use App\Types;
-use GraphQL\Type\Definition\ObjectType;
 
-class CategoriesType extends ObjectType
+class CategoriesType extends BaseType
 {
     public function __construct()
     {
         $config = [
             'name' => 'Category',
-            'fields' => function () {
-                return [
-                    'name' => Types::string(),
-                    'id' => Types::string(),
-                ];
-            }
+            'fields' => [
+                'id' => Types::int(),
+                'name' => Types::string(),
+            ],
         ];
 
         parent::__construct($config);

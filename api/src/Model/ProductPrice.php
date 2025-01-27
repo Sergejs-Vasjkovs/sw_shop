@@ -1,12 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Model;
+
+use PDO;
 
 class ProductPrice extends AbstractProductDetails
 {
-    protected $table = "product_prices";
+    protected string $table = "product_prices";
 
-    public function __construct($db, $id)
+    public function __construct(PDO $db, string $id)
     {
         parent::__construct($db, $id);
     }

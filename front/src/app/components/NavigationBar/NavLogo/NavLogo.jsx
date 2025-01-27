@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
-import { setCurrentValue } from "../../../../store/categoriesSlice";
+import { setCurrentValue } from "../../../../store/slices/categoriesSlice";
 import shopLogo from "../../../assets/shop_logo.svg";
 import styles from "./NavLogo.module.css";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";

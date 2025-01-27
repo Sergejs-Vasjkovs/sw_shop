@@ -1,71 +1,78 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Route, Switch } from "react-router-dom";
-import { compose } from "redux";
 import { connect } from "react-redux";
-import { graphql } from "@apollo/client/react/hoc";
-import { fetchProductsSuccess } from "../../../store/productsSlice";
-import { fetchCategoriesSuccess } from "../../../store/categoriesSlice";
+import { ApolloConsumer } from "@apollo/client";
+import { fetchProductsSuccess } from "../../../store/slices/productsSlice";
+import { fetchCategoriesSuccess } from "../../../store/slices/categoriesSlice";
 import queries from "../../GraphQL/queries";
 import Loader from "../../UI/Loader/Loader";
-import ErrorPage from "../ErrorPage/ErrorPage";
 import NavBar from "../../components/NavigationBar/NavBar/NavBar";
+import ErrorPage from "../ErrorPage/ErrorPage";
 import ProductDescription from "../../components/ProductDescription/ProductDescription";
 import ProductList from "../../components/ProductsList/ProductsList";
-import PageNoteFound from "../../pages/PageNotFound/PageNotFound";
+import PageNoteFound from "../PageNotFound/PageNotFound";
 import styles from "./MainPage.module.css";
 import Modal from "../../UI/Modal/Modal";
 import MiniCart from "../../components/MiniCart/MiniCart";
 
 class MainPage extends Component {
-    componentDidMount() {
-        this.updateData();
-    }
-
-    componentDidUpdate(prevProps) {
-        if (prevProps.mainQuery.loading && !this.props.mainQuery.loading) {
-            this.updateData();
-        }
-    }
-
-    updateData = () => {
-        const { dispatch, mainQuery } = this.props;
-
-        if (mainQuery && !mainQuery.loading && !mainQuery.error) {
-            const { products, categories } = mainQuery;
-            if (products && categories) {
-                dispatch(fetchProductsSuccess(products));
-                dispatch(fetchCategoriesSuccess(categories));
-            }
-        }
+    state = {
+        loading: true,
+        error: null
     };
 
     render() {
-        const { mainQuery } = this.props;
-        if (mainQuery.loading) {
-            return <Loader />;
-        }
+        const { loading, error } = this.state;
+        const { isVisible } = this.props;
 
-        if (mainQuery.error) {
+        if (error) {
             return <ErrorPage />;
         }
 
         return (
-            <div className={styles.container}>
-                <NavBar />
-                <main>
-                    {this.props.isVisible
-                        ? <Modal>
-                            <MiniCart />
-                        </Modal>
-                        : null}
-                    <Switch>
-                        <Route path="/category/:category?/:id?" component={ProductDescription} />
-                        <Route exact path="/:category?" component={ProductList} />
-                        <Route component={PageNoteFound} />
-                    </Switch>
-                </main>
-            </div>
+            <ApolloConsumer>
+                {client => {
+                    if (loading) {
+                        client.query({
+                            query: queries.mainQuery
+                        }).then(({ data }) => {
+                            this.props.dispatch(fetchProductsSuccess(data.products));
+                            this.props.dispatch(fetchCategoriesSuccess(data.categories));
+                            this.setState({ loading: false });
+                        }).catch(error => {
+                            this.setState({ error, loading: false });
+                        });
+
+                        return <Loader />;
+                    }
+
+                    return (
+                        <div className={styles.container}>
+                            <NavBar />
+                            <main>
+                                {isVisible && (
+                                    <Modal>
+                                        <MiniCart />
+                                    </Modal>
+                                )}
+                                <Switch>
+                                    <Route
+                                        path="/category/:category?/:id?"
+                                        component={ProductDescription}
+                                    />
+                                    <Route
+                                        exact
+                                        path="/:category?"
+                                        component={ProductList}
+                                    />
+                                    <Route component={PageNoteFound} />
+                                </Switch>
+                            </main>
+                        </div>
+                    );
+                }}
+            </ApolloConsumer>
         );
     }
 }
@@ -73,18 +80,11 @@ class MainPage extends Component {
 MainPage.propTypes = {
     dispatch: PropTypes.func.isRequired,
     isVisible: PropTypes.bool.isRequired,
-    mainQuery: PropTypes.shape({
-        loading: PropTypes.bool.isRequired,
-        error: PropTypes.object,
-        products: PropTypes.array,
-        categories: PropTypes.array
-    }).isRequired
+    client: PropTypes.object
 };
 
 const mapStateToProps = state => ({
     isVisible: state.modal.isVisible
 });
 
-export default connect(mapStateToProps)(compose(
-    graphql(queries.mainQuery, { name: "mainQuery" })
-)(MainPage));
+export default connect(mapStateToProps)(MainPage);

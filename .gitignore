@@ -1,1 +1,33 @@
+# Environment variables
+.env
+api/.env
+front/.env
+
+# Dependencies
 api/vendor/
+front/node_modules/
+composer.lock
+package-lock.json
+yarn.lock
+
+# IDE files
+.idea/
+.vscode/
+
+# Logs
+*.log
+api/logs/
+front/logs/
+
+# Build outputs
+front/build/
+front/dist/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db

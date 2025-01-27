@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import styles from "./Backdrop.module.css";
-import { toggleModalVisibility } from "../../../store/modalSlice";
+import { toggleModalVisibility } from "../../../store/slices/modalSlice";
 
 class Backdrop extends Component {
     constructor(props) {

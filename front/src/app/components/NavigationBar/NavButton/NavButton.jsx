@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { setCurrentValue, setCategoryByName } from "../../../../store/categoriesSlice";
+import { setCurrentValue, setCategoryByName } from "../../../../store/slices/categoriesSlice";
 import styles from "./NavButton.module.css";
 import { withRouter } from "react-router";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";

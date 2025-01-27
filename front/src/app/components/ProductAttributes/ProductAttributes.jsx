@@ -4,10 +4,10 @@ import styles from "./ProductAttributes.module.css";
 import RadioInput from "../../UI/RadioInput/RadioInput";
 import { connect } from "react-redux";
 import Button from "../../UI/Button/Button";
-import { addItem } from "../../../store/cartSlice";
+import { addProductToCart } from "../../../store/slices/cartSlice";
 import groupAttributes from "../../utils/groupAttributes";
 import parse from "html-react-parser";
-import { toggleModalVisibility } from "../../../store/modalSlice";
+import { toggleModalVisibility } from "../../../store/slices/modalSlice";
 
 export class ProductAttributes extends Component {
     constructor() {
@@ -33,7 +33,7 @@ export class ProductAttributes extends Component {
             ...this.props.product,
             input: this.state
         };
-        this.props.addItem(newProduct);
+        this.props.addProductToCart(newProduct);
         this.props.toggleModalVisibility();
     };
 
@@ -81,8 +81,8 @@ export class ProductAttributes extends Component {
 
 ProductAttributes.propTypes = {
     product: PropTypes.object.isRequired,
-    addItem: PropTypes.func.isRequired,
+    addProductToCart: PropTypes.func.isRequired,
     toggleModalVisibility: PropTypes.func.isRequired
 };
 
-export default connect(null, { addItem, toggleModalVisibility })(ProductAttributes);
+export default connect(null, { addProductToCart, toggleModalVisibility })(ProductAttributes);
